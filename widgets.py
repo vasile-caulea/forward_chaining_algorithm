@@ -125,7 +125,10 @@ class ProblemWidget(QWidget):
         if not self.demonstration_steps:
             QMessageBox.warning(self, 'Error', 'Not demonstrated yet')
             return
-        plot_graph(self.file_name, self.demonstration_steps)
+        try:
+            plot_graph(self.file_name, self.demonstration_steps)
+        except Exception as e:
+            QMessageBox.critical(self, 'Error', str(e))
 
     def set_knowledge_base(self):
         try:
