@@ -1,0 +1,11 @@
+kb:
+Diff(wa, nt) AND Diff(wa, sa) AND Diff(nt, q) AND Diff(nt, sa) AND Diff(q, nsw) AND Diff(q, sa) AND Diff(nsw, v) AND Diff(nsw, sa) AND Diff(v, sa) -> Colorable()
+Diff(Red, Blue) 
+Diff(Red, Green)
+Diff(Green, Red) 
+Diff(Green, Blue)
+Diff(Blue, Red) 
+Diff(Blue, Green)
+
+query:
+Colorable()

@@ -1,0 +1,8 @@
+kb:
+Sin(x,a,c)
+Cos(x,b,c)
+FF(x)
+Sin(t,k,m) AND Cos(t,y,m) AND FF(t) -> Pitagora(k,y,m)
+
+query:
+Pitagora(a,b,c)
