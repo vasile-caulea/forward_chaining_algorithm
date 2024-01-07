@@ -31,17 +31,21 @@ class Clause:
     def get_substitution(self, clause: 'Clause') -> 'Literal' or None:
         """Gets a substitution for the clause rule (self) with the received clause"""
         theta = {}
-        for rule_literal in self.premises:
-            for substitution_literal in clause.premises:
-                if rule_literal.is_same_type_with(substitution_literal):
-                    substitution = rule_literal.substitute_with(substitution_literal)
-                    for key in substitution:
-                        # for case {x: 'Jane'} and then {x: 'John'}
-                        if key in theta and theta[key] != substitution[key]:
-                            return None
-                        else:
-                            theta[key] = substitution[key]
-
+        for i in range(len(self.premises)):
+            if self.premises[i].is_same_type_with(clause.premises[i]):
+                substitution = self.premises[i].substitute_with(clause.premises[i])
+                if substitution is None:
+                    return None
+                for key in substitution:
+                    # for case {x: 'Jane'} and then {x: 'John'}
+                    if key in theta and theta[key] != substitution[key]:
+                        return None
+                    else:
+                        theta[key] = substitution[key]
+            else:
+                return None
+        if len(theta) == 0:
+            return None
         literal = Literal('')
         literal.name = self.conclusion.name
         for value in self.conclusion.values:
@@ -61,9 +65,10 @@ class Clause:
         if len(self.premises) != len(other.premises):
             return False
 
-        for lit in self.premises:
-            if lit not in other.premises:
+        for i in range(len(self.premises)):
+            if self.premises[i] != other.premises[i]:
                 return False
+
         return True
 
     def __repr__(self):

@@ -16,6 +16,8 @@ class Literal:
         result = {}
         for i in range(0, len(self.values)):
             if self.values[i] != other.values[i]:
+                if self.values[i] in result and result[self.values[i]] != other.values[i]:
+                    return None
                 result[self.values[i]] = other.values[i]
         return result
 
@@ -29,6 +31,9 @@ class Literal:
             if self.values[i] != other.values[i]:
                 return False
         return True
+
+    def __hash__(self):
+        return hash((self.name, tuple(self.values)))
 
     def __repr__(self):
         return f'{self.name}({", ".join(self.values)})'

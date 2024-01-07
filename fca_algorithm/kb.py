@@ -55,21 +55,26 @@ class KnowledgeBase:
 
     def get_theta(self, clause_rule: Clause) -> list[Clause]:
         """Gets all the possible substitutions for the clause rule"""
-        possible_substitutions = []
-        # for each literal check if is present in the premises of the rule clause and add it to possible substitutions
-        for clause in self.__fact_clauses:
-            for literal in [clause for lit in clause_rule.premises if lit.is_same_type_with(clause)]:
-                if literal not in possible_substitutions:
-                    possible_substitutions.append(literal)
+        possible_substitutions = list()
+        for literal in clause_rule.premises:
+            for clause in self.__fact_clauses:
+                if literal.is_same_type_with(clause) and clause not in possible_substitutions:
+                    possible_substitutions.append(clause)
+
+        print("---------------------------")
+        print(possible_substitutions)
+        print(clause_rule.premises)
 
         # for each possible substitution, create a combination of premises that match the premises of the rule clause
         substitutions = []
-        # combinations = list(itertools.permutations(possible_substitutions, len(clause_rule.premises)))
-        combinations = itertools.product(possible_substitutions, repeat=len(clause_rule.premises))
-        for premises in combinations:
+        values = itertools.product(possible_substitutions, repeat=len(clause_rule.premises))
+
+        for premises in values:
             clause = Clause.create_new(premises, None)
             if clause.match(clause_rule):
                 substitutions.append(clause)
+        print(substitutions)
+        print("---------------------------")
         return substitutions
 
     def __repr__(self):

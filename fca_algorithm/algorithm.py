@@ -10,7 +10,8 @@ def demonstrate(knb: KnowledgeBase):
         for rule_clause in knb.get_rule_clauses():
             for theta in knb.get_theta(rule_clause):
                 conclusion = rule_clause.get_substitution(theta)
-                print(f'{theta} -> {conclusion}')
+                if conclusion is not None:
+                    print(f'{theta} -> {conclusion}')
                 if conclusion and (not knb.contains_clause(conclusion)) and (conclusion not in new):
                     new.append(conclusion)
                     steps.append((theta, conclusion))
@@ -24,7 +25,17 @@ def demonstrate(knb: KnowledgeBase):
 
 def get_solution(demonstration_steps: list[tuple[Clause, Literal]]) -> list[tuple[Clause, Literal]]:
     last_step = demonstration_steps[-1]
-    for elem in demonstration_steps:
-        if elem[1] not in last_step[0].premises and id(elem[0]) != id(last_step[0]):
+    i = 0
+    while i < len(demonstration_steps):
+        elem = demonstration_steps[i]
+        found = False
+        for elem2 in demonstration_steps:
+            if elem[1] in elem2[0].premises:
+                found = True
+                break
+        if not found:
             demonstration_steps.remove(elem)
+        else:
+            i += 1
+    demonstration_steps.append(last_step)
     return demonstration_steps

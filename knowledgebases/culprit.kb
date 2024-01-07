@@ -3,10 +3,10 @@ Criminal(West)
 
 kb:
 American(x) AND Weapon(y) AND Sells(x,y,z) AND Hostile(z) -> Criminal(x)
-Owns(Nono, M1)
-Missile(M1)
 Missile(x) AND Owns(Nono, x) -> Sells(West, x, Nono)
 Missile(x) -> Weapon(x)
 Enemy(x, America) -> Hostile(x)
+Owns(Nono, M1)
+Missile(M1)
 American(West)
 Enemy(Nono, America)

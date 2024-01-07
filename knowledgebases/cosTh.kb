@@ -1,0 +1,15 @@
+kb:
+vect(AB)
+vect(AC)
+vect(BC)
+FPP(AB, AC, BC)
+VectorialProduct(AC, AC)
+VectorialProduct(AC, AB)
+VectorialProduct(AB, AB)
+
+vect(x) AND vect(y) AND vect(z) -> TriangleRule(x, y, z)
+TriangleRule(x, y, z) AND FPP(x, y, z) -> Equation(x, y, z)
+Equation(x, y, z) AND VectorialProduct(x, x) AND VectorialProduct(y, y) AND VectorialProduct(y, x) -> CosTh(x, y, z)
+
+query:
+CosTh(AB, AC, BC)
