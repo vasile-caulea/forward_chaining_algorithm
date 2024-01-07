@@ -1,6 +1,6 @@
 # Forward chaining algorithm
 
-Dependecies:
+Dependencies:
 - PyQt5:       used version 5.15.10
 - PyQt5-Qt5:   used version 5.15.2
 - matplotlib:  used version 3.8.2
