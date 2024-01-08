@@ -61,10 +61,6 @@ class KnowledgeBase:
                 if literal.is_same_type_with(clause) and clause not in possible_substitutions:
                     possible_substitutions.append(clause)
 
-        print("---------------------------")
-        print(possible_substitutions)
-        print(clause_rule.premises)
-
         # for each possible substitution, create a combination of premises that match the premises of the rule clause
         substitutions = []
         values = itertools.product(possible_substitutions, repeat=len(clause_rule.premises))
@@ -73,8 +69,6 @@ class KnowledgeBase:
             clause = Clause.create_new(premises, None)
             if clause.match(clause_rule):
                 substitutions.append(clause)
-        print(substitutions)
-        print("---------------------------")
         return substitutions
 
     def __repr__(self):
