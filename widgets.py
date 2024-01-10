@@ -113,9 +113,9 @@ class ProblemWidget(QWidget):
         if not self.set_knowledge_base():
             return
         self.editor_demonstration.setText('Calculating...')
-        demonstration_thread = DemonstrationThread(self.knowledge_base)
-        demonstration_thread.finished.connect(self.handle_demonstration_finished)
-        demonstration_thread.start()
+        self.demonstration_thread = DemonstrationThread(self.knowledge_base)
+        self.demonstration_thread.finished.connect(self.handle_demonstration_finished)
+        self.demonstration_thread.start()
 
     def handle_demonstration_finished(self, status, steps):
         if not status:

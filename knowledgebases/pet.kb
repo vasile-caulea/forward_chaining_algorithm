@@ -1,0 +1,11 @@
+kb:
+TooBig(x) AND GoodSize(y) -> BetterPet(y,x)
+Giraffe(x) -> TooBig(x)
+Dog(x) -> GoodSize(x)
+Barks(x) AND WagsTail(x) -> Dog(x)
+Giraffe(Bob)
+Barks(Sally)
+WagsTail(Sally)
+
+query:
+BetterPet(Sally,Bob)
