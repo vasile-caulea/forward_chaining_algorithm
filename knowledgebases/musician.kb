@@ -1,0 +1,10 @@
+kb:
+
+Instrument(y) AND Musician(x) -> Plays(x,y)
+Instrument(y) AND Plays(x,y) -> NotToneDeaf(x)
+Musician(Grace)
+Instrument(I1)
+
+query:
+
+NotToneDeaf(Grace)

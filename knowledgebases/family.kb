@@ -1,0 +1,15 @@
+kb:
+
+Parent(x,y) AND Parent(x,z) AND Distinct(y,z) -> Sibling(y,z)
+Parent(x,y) AND Sibling(x,z) AND Parent(z,w) -> Cousin(y,w)
+Distinct(x,y) -> Distinct(y,x)
+Parent(Lisa,Eric)
+Parent(Lisa,Rachel)
+Parent(Speed,Lisa)
+Parent(Speed,Jay)
+Parent(Jay,Frances)
+Distinct(Eric,Rachel)
+Distinct(Lisa,Jay)
+
+query:
+Cousin(Rachel,Frances)
