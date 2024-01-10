@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QTextEdit, QPushButton, QVBoxLayout, QHBoxLayout, QLabel, QGridLayout, QLineEdit, \
     QFrame, QMessageBox, QFileDialog
 
@@ -112,12 +112,16 @@ class ProblemWidget(QWidget):
     def demonstrate(self):
         if not self.set_knowledge_base():
             return
+        self.editor_demonstration.setText('Calculating...')
+        demonstration_thread = DemonstrationThread(self.knowledge_base)
+        demonstration_thread.finished.connect(self.handle_demonstration_finished)
+        demonstration_thread.start()
 
-        status, steps = demonstrate(self.knowledge_base)
+    def handle_demonstration_finished(self, status, steps):
         if not status:
             self.editor_demonstration.setText('No solution found')
         else:
-            self.demonstration_steps = get_solution(steps)
+            self.demonstration_steps = steps
             self.editor_demonstration.setText(
                 '\n'.join(str(step[0]) + ' -> ' + str(step[1]) for step in self.demonstration_steps))
 
@@ -154,6 +158,18 @@ class ProblemWidget(QWidget):
     def set_label_file_name(self):
         if self.file_name:
             self.label_file_name.setText(self.file_name)
+
+
+class DemonstrationThread(QThread):
+    finished = pyqtSignal(bool, list)
+
+    def __init__(self, knowledge_base):
+        super().__init__()
+        self.knowledge_base = knowledge_base
+
+    def run(self):
+        status, steps = demonstrate(self.knowledge_base)
+        self.finished.emit(status, get_solution(steps))
 
 
 def get_separator() -> QFrame:

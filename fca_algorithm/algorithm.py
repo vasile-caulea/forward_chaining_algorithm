@@ -5,14 +5,15 @@ from fca_algorithm.literal import Literal
 
 def demonstrate(knb: KnowledgeBase):
     steps = []
+    iteration = 1
     while True:
+        print(f'Iteration {iteration}'.center(50, '-'))
         new = []
         for rule_clause in knb.get_rule_clauses():
             for theta in knb.get_theta(rule_clause):
                 conclusion = rule_clause.get_substitution(theta)
-                if conclusion is not None:
-                    print(f'{theta} -> {conclusion}')
                 if conclusion and (not knb.contains_clause(conclusion)) and (conclusion not in new):
+                    print(f'{theta} -> {conclusion}')
                     new.append(conclusion)
                     steps.append((theta, conclusion))
                     if knb.is_solution(conclusion):
@@ -20,6 +21,7 @@ def demonstrate(knb: KnowledgeBase):
         knb.add_new_clauses(new)
         if len(new) == 0:
             break
+        iteration += 1
     return False, steps
 
 
